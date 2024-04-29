@@ -11,7 +11,10 @@ public class Jogador {
         this.pontuacao = pontuacao;
         this.numeroTentativas = numeroTentativas;
     }
-    public void adicionaPontos(){}
+
+    public void adicionaPontos() {
+        this.pontuacao++;
+    }
     public void perdePontos(){}
     public void adicionaTentativa(){}
 

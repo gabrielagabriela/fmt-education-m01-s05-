@@ -2,18 +2,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-
 public class Main {
     public static void main(String[] args) {
-
         List<Jogador> melhoresJogadores = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
 
-        // Pedir ao usuário para inserir os dados do jogador
+        Jogador melhorJogador = criarNovoJogador(scanner, melhoresJogadores);
+
+        Jogo jogo = new Jogo(melhorJogador);
+
+        jogo.jogar();
+
+        atualizarMelhoresJogadores(jogo, melhorJogador, melhoresJogadores);
+
+        System.out.println("Melhores jogadores após o jogo:");
+        exibirListaMelhoresJogadores(melhoresJogadores);
+    }
+
+    public static Jogador criarNovoJogador(Scanner scanner, List<Jogador> melhoresJogadores) {
         System.out.println("Informe o nome do jogador:");
         String nome = scanner.nextLine();
 
-        // Validar se o nome já existe na lista de jogadores
         while (nomeJaExiste(melhoresJogadores, nome)) {
             System.out.println("Este nome já está em uso. Por favor, escolha outro nome:");
             nome = scanner.nextLine();
@@ -26,24 +35,28 @@ public class Main {
         System.out.println("Informe o número de tentativas do jogador:");
         int numeroTentativas = Integer.parseInt(scanner.nextLine());
 
-        // Criar um novo jogador com os dados fornecidos
         Jogador novoJogador = new Jogador(nome, idade, pontuacao, numeroTentativas);
 
-        // Adicionar jogador na lista de melhores jogadores
         incluirJogadorLista(melhoresJogadores, novoJogador);
 
-        // Exibir lista de melhores jogadores
-        exibirListaMelhoresJogadores(melhoresJogadores);
+        return novoJogador;
     }
 
-    public static void incluirJogadorLista(List<Jogador> melhoresJogadores, Jogador jogador){
+    public static void atualizarMelhoresJogadores(Jogo jogo, Jogador melhorJogador, List<Jogador> melhoresJogadores) {
+        // Verificar se o jogador melhorou sua pontuação durante o jogo
+        if (jogo.getMelhorJogador().getPontuacao() < melhorJogador.getPontuacao()) {
+            jogo.setMelhorJogador(melhorJogador);
+        }
+    }
+
+    public static void incluirJogadorLista(List<Jogador> melhoresJogadores, Jogador jogador) {
         if (melhoresJogadores.isEmpty()) {
             melhoresJogadores.add(jogador);
             return;
         }
 
         int i;
-        for( i = 0; i < melhoresJogadores.size(); i++){
+        for (i = 0; i < melhoresJogadores.size(); i++) {
             if (jogador.getPontuacao() > melhoresJogadores.get(i).getPontuacao()) {
                 break;
             }
