@@ -46,4 +46,8 @@ public class Jogador {
     public void setNumeroTentativas(int numeroTentativas) {
         this.numeroTentativas = numeroTentativas;
     }
+
+    public String formatarNomeEPosicao(int posicao) {
+        return this.nome + " - " + posicao;
+    }
 }
