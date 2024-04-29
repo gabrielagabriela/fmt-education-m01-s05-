@@ -10,7 +10,6 @@ public class Jogo {
         this.numeroJogadas = 0;
     }
 
-
     public Jogador getMelhorJogador() {
         return melhorJogador;
     }
@@ -29,24 +28,50 @@ public class Jogo {
             System.out.println("Escolha sua jogada (pedra, papel ou tesoura):");
             String jogadaJogador = scanner.nextLine().toLowerCase();
 
-
             String[] jogadasPossiveis = {"pedra", "papel", "tesoura"};
             int indiceJogadaSistema = random.nextInt(3);
             String jogadaSistema = jogadasPossiveis[indiceJogadaSistema];
 
             System.out.println("O sistema escolheu: " + jogadaSistema);
 
-
             String resultado = determinarResultado(jogadaJogador, jogadaSistema);
             System.out.println(resultado);
 
-
             this.numeroJogadas++;
-
 
             if (resultado.equals("Você ganhou!")) {
                 this.melhorJogador.adicionaPontos();
             }
+
+            System.out.println("Deseja jogar novamente? (s/n)");
+            String continuar = scanner.nextLine().toLowerCase();
+            if (!continuar.equals("s")) {
+                break;
+            }
+        }
+    }
+
+    public void jogar(int num) {
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+
+        System.out.println("Bem-vindo ao jogo de adivinhação de números!");
+
+        while (true) {
+            int numeroAleatorio = random.nextInt(num + 1);
+
+            System.out.println("Tente adivinhar o número entre 0 e " + num + ":");
+            int tentativaJogador = Integer.parseInt(scanner.nextLine());
+
+            if (tentativaJogador == numeroAleatorio) {
+                System.out.println("Parabéns! Você acertou!");
+                this.melhorJogador.adicionaPontos();
+            } else {
+                System.out.println("Você errou. O número era: " + numeroAleatorio);
+                this.melhorJogador.perdePontos();
+            }
+
+            this.numeroJogadas++;
 
             System.out.println("Deseja jogar novamente? (s/n)");
             String continuar = scanner.nextLine().toLowerCase();
